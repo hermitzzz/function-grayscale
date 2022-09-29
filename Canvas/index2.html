@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+			  src="https://code.jquery.com/jquery-3.6.0.min.js"
+			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			  crossorigin="anonymous"></script>
+    <style>
+        body{
+            background: url("1.jpg");
+        }
+        canvas{
+            border-style: solid;
+            border-color: aliceblue;
+            
+        }
+        .grey{
+            -webkit-filter: grayscale(100%); 
+            filter: grayscale(100%);
+        }
+        .text1{
+            font-family: "Lucida Console", "Courier New", monospace;
+            color: aliceblue;
+            text-align: center;
+        }
+        button{
+            background-color: blue;
+            font-family: "Lucida Console", "Courier New", monospace;
+            color: aliceblue;
+        }
+       
+
+
+    </style>
+</head>
+<body>
+
+    <div class = "text1">
+    <h1>Please add your image:</h1> <input type="file" id="imgInput" accept = "image/*"><br/>
+    <button type="submit" id="button">Grayscale</button><br/>
+    <h1>Your added image is:</h1><br/><canvas id= "myCanvas" width="1000" height="1000"></canvas></div>
+<script>
+    let button = $("#button");
+        button.on("click", () => {
+            $("#myCanvas").toggleClass("grey");
+        });
+    let imgInput = $('#imgInput');
+    imgInput.on('change', function(e) {
+        if(e.target.files) {
+        let imageFile = $('#imgInput').prop('files')[0]; 
+        var reader = new FileReader();
+        reader.readAsDataURL(imageFile);
+        reader.onloadend = function (e) {
+            var myImage = new Image(); 
+            myImage.src = e.target.result; 
+            myImage.onload = function(ev) {
+                var myCanvas = $("#myCanvas").get(0); 
+                var myContext = myCanvas.getContext("2d");
+                myCanvas.width = 1000;
+                myCanvas.height =1000;
+                myContext.drawImage(myImage,0,0); 
+                let imgData = myCanvas.toDataURL("image/jpeg",0.75); 
+        }
+      }
+    }
+  });
+        
+
+
+
+
+    const img = document.querySelector('img');
+const canvas = document.querySelector('canvas');
+const ctx = canvas.getContext('2d');
+
+function gri() {
+  canvas.width = img.width;
+  canvas.height = img.height;
+  ctx.filter = 'grayscale(1)';
+  ctx.drawImage(img, 0, 0, img.width, img.height);
+}
+
+
+function gcizdir() {
+        gri();
+    }
+
+</script>
+
+
+</body>
+</html>
